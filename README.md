@@ -1,5 +1,3 @@
 # InnerCommand
 
-This is the personal transformation app powered by React and Vercel.
-
-Installable as a PWA.
+This is your full React + PWA app, ready to run on Vercel.
