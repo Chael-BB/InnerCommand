@@ -1,3 +1,3 @@
-# InnerCommand
+# InnerCommand v1.1
 
-React + PWA app scaffolded and ready for Vercel.
+A personal transformation journal app with mood + log tracking.
