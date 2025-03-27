@@ -1,3 +1,3 @@
-# InnerCommand v1.1
+# InnerCommand v1.2
 
-A personal transformation journal app with mood + log tracking.
+Tailwind CSS enabled React app with mood journaling and log tracking.
