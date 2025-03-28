@@ -2,77 +2,75 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [mood, setMood] = useState(5); // 0 = worst, 10 = happiest
+  const [mood, setMood] = useState(5);
   const [note, setNote] = useState("");
   const [entries, setEntries] = useState([]);
 
-  const handleSubmit = () => {
+  const handleSave = () => {
     const newEntry = {
-      timestamp: new Date().toLocaleString(),
       mood,
       note,
+      time: new Date().toLocaleString(),
     };
     setEntries([newEntry, ...entries]);
     setNote("");
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gradient-to-b from-blue-100 via-white to-yellow-100 text-gray-800 font-sans">
-      <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-semibold text-center mb-2">Inner Command</h1>
-        <p className="text-center mb-6 text-sm">Control yourself, peaceful mind</p>
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 via-white to-yellow-100 text-gray-800 p-6 font-sans">
+      <h1 className="text-3xl font-bold text-center mb-2">InnerCommand</h1>
+      <p className="text-center text-sm mb-6">Control yourself, peaceful mind</p>
 
-        <div className="bg-white rounded-xl shadow p-6">
-          <h2 className="text-lg font-medium mb-4 text-center">How are you feeling today?</h2>
+      <div className="bg-white p-5 rounded-xl shadow-md max-w-md mx-auto">
+        <h2 className="text-lg font-semibold text-center mb-4">
+          How are you feeling today?
+        </h2>
 
-          <div className="flex items-center space-x-3 mb-2">
-            <span>😢</span>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              value={mood}
-              onChange={(e) => setMood(Number(e.target.value))}
-              className="flex-grow appearance-none h-2 bg-gradient-to-r from-blue-400 to-yellow-400 rounded-full outline-none"
-            />
-            <span>😊</span>
-          </div>
-
-          <div className="text-center text-sm mb-4">
-            Mood Score: <strong>{mood}</strong> / 10
-          </div>
-
-          <textarea
-            placeholder="What caused you to feel this way?"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            className="w-full h-24 border rounded-lg p-2 mb-4 resize-none"
+        <div className="flex items-center gap-3 mb-3">
+          <span>😢</span>
+          <input
+            type="range"
+            min="0"
+            max="10"
+            value={mood}
+            onChange={(e) => setMood(Number(e.target.value))}
+            className="flex-grow"
           />
-
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 text-white px-4 py-2 rounded-xl w-full hover:bg-blue-600 transition"
-          >
-            Save Entry
-          </button>
+          <span>😊</span>
         </div>
 
-        <div className="mt-6">
-          <h3 className="text-md font-semibold mb-2">Recent Logs</h3>
-          {entries.length === 0 ? (
-            <p className="text-sm text-gray-500">No entries yet.</p>
-          ) : (
-            <ul className="space-y-3">
-              {entries.map((entry, index) => (
-                <li key={index} className="border rounded-lg p-3 bg-white shadow">
-                  <div className="text-sm text-gray-600">{entry.timestamp}</div>
-                  <div className="text-lg">Mood: {entry.mood}/10</div>
-                  <div className="text-sm">{entry.note}</div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <p className="text-center text-sm mb-4">Current Mood: {mood}/10</p>
+
+        <textarea
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="Anything you'd like to note?"
+          className="w-full h-20 p-2 border rounded-lg mb-4"
+        />
+
+        <button
+          onClick={handleSave}
+          className="w-full bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition"
+        >
+          Save Entry
+        </button>
+      </div>
+
+      <div className="max-w-md mx-auto mt-6">
+        <h3 className="text-md font-bold mb-2">Recent Logs</h3>
+        {entries.length === 0 ? (
+          <p className="text-sm text-gray-500">No entries yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {entries.map((entry, idx) => (
+              <li key={idx} className="bg-white p-3 rounded-xl shadow text-sm">
+                <div className="text-gray-600">{entry.time}</div>
+                <div>Mood: {entry.mood}/10</div>
+                <div>{entry.note}</div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
