@@ -1,3 +1,3 @@
-# InnerCommand v1.3.1
+# InnerCommand v1.4
 
-Emoji mood selector version with Zen layout.
+This version uses a 0–10 slider scale for mood tracking.
