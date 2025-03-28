@@ -1,79 +1,77 @@
 import React, { useState } from "react";
-import "./App.css";
 
-function App() {
-  const [mood, setMood] = useState(5);
+export default function App() {
+  const [mood, setMood] = useState(5); // Default mood: middle
   const [note, setNote] = useState("");
-  const [entries, setEntries] = useState([]);
+  const [logs, setLogs] = useState([]);
 
   const handleSave = () => {
-    const newEntry = {
+    const entry = {
       mood,
       note,
-      time: new Date().toLocaleString(),
+      timestamp: new Date().toLocaleString(),
     };
-    setEntries([newEntry, ...entries]);
-    setNote("");
+    setLogs([entry, ...logs]);
+    setNote(""); // Clear note after saving
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 via-white to-yellow-100 text-gray-800 p-6 font-sans">
-      <h1 className="text-3xl font-bold text-center mb-2">InnerCommand</h1>
-      <p className="text-center text-sm mb-6">Control yourself, peaceful mind</p>
+    <div className="min-h-screen bg-gray-50 text-gray-900 p-6 font-sans">
+      <h1 className="text-4xl font-bold mb-4">InnerCommand</h1>
+      <p className="text-lg mb-6">How are you feeling today?</p>
 
-      <div className="bg-white p-5 rounded-xl shadow-md max-w-md mx-auto">
-        <h2 className="text-lg font-semibold text-center mb-4">
-          How are you feeling today?
-        </h2>
-
-        <div className="flex items-center gap-3 mb-3">
-          <span>😢</span>
-          <input
-            type="range"
-            min="0"
-            max="10"
-            value={mood}
-            onChange={(e) => setMood(Number(e.target.value))}
-            className="flex-grow"
-          />
-          <span>😊</span>
-        </div>
-
-        <p className="text-center text-sm mb-4">Current Mood: {mood}/10</p>
-
-        <textarea
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          placeholder="Anything you'd like to note?"
-          className="w-full h-20 p-2 border rounded-lg mb-4"
+      <div className="mb-4">
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={mood}
+          onChange={(e) => setMood(Number(e.target.value))}
+          className="w-full accent-blue-500"
         />
-
-        <button
-          onClick={handleSave}
-          className="w-full bg-blue-500 text-white rounded-lg py-2 hover:bg-blue-600 transition"
-        >
-          Save Entry
-        </button>
+        <div className="flex justify-between text-sm text-gray-600 mt-1">
+          <span>😞 Worst</span>
+          <span>😐 Okay</span>
+          <span>😊 Best</span>
+        </div>
+        <div className="text-center text-lg mt-2">
+          Current Mood: <strong>{mood}/10</strong>
+        </div>
       </div>
 
-      <div className="max-w-md mx-auto mt-6">
-        <h3 className="text-md font-bold mb-2">Recent Logs</h3>
-        {entries.length === 0 ? (
-          <p className="text-sm text-gray-500">No entries yet.</p>
-        ) : (
-          <ul className="space-y-2">
-            {entries.map((entry, idx) => (
-              <li key={idx} className="bg-white p-3 rounded-xl shadow text-sm">
-                <div className="text-gray-600">{entry.time}</div>
-                <div>Mood: {entry.mood}/10</div>
-                <div>{entry.note}</div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <textarea
+        className="w-full border rounded-xl p-3 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        placeholder="Anything you'd like to note?"
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+      />
+
+      <button
+        onClick={handleSave}
+        className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition"
+      >
+        Save Entry
+      </button>
+
+      <h2 className="text-xl font-semibold mt-8 mb-2">Recent Logs</h2>
+      {logs.length === 0 ? (
+        <p className="text-gray-500 text-sm">No entries yet.</p>
+      ) : (
+        <ul className="space-y-3">
+          {logs.map((log, index) => (
+            <li
+              key={index}
+              className="p-3 border rounded-xl bg-white shadow-sm"
+            >
+              <div className="text-sm text-gray-700">
+                <strong>Mood:</strong> {log.mood}/10
+              </div>
+              <div className="text-sm text-gray-600">{log.note}</div>
+              <div className="text-xs text-gray-400">{log.timestamp}</div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
-
-export default App;
