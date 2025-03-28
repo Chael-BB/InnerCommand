@@ -1,3 +1,3 @@
-# InnerCommand v1.4
+# InnerCommand v1.4.1
 
-This version uses a 0–10 slider scale for mood tracking.
+Slider version with labeled mood scale (Worst → Okay → Best).
