@@ -1,3 +1,3 @@
-# InnerCommand v1.2
+# InnerCommand v1.3.1
 
-Tailwind CSS enabled React app with mood journaling and log tracking.
+Emoji mood selector version with Zen layout.
