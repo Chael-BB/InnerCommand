@@ -66,7 +66,10 @@ function Home() {
             <button
               key={m.label}
               onClick={() => setMood(m.label)}
-              className={\`border rounded-xl py-2 text-xl \${mood === m.label ? 'bg-blue-100 border-blue-500' : 'bg-white'}\`}
+              className={
+  "border rounded-xl py-2 text-xl " +
+  (mood === m.label ? "bg-blue-100 border-blue-500" : "bg-white")
+}
             >
               {m.emoji}
               <div className="text-sm">{m.label}</div>
