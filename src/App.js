@@ -1,102 +1,106 @@
-import React, { useState } from "react";
+// InnerCommand UI - Core Layout (React + TailwindCSS)
 
-export default function App() {
-  const [mood, setMood] = useState(5);
-  const [note, setNote] = useState("");
-  const [logs, setLogs] = useState([]);
+import React, { useState } from 'react';
 
-  const handleSave = () => {
-    const entry = {
-      mood,
-      note,
-      timestamp: new Date().toLocaleString(),
-    };
-    setLogs([entry, ...logs]);
-    setNote("");
+export default function InnerCommand() {
+  const [mood, setMood] = useState(50); // 0 (sad/blue) to 100 (happy/yellow)
+  const [note, setNote] = useState('');
+  const [entry, setEntry] = useState('');
+
+  const moodGradient = {
+    background: `linear-gradient(to right, #3b82f6, #facc15)` // Blue to Yellow
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans flex flex-col p-2">
-      {/* Header */}
-      <div className="text-center mb-4">
-        <h1 className="text-4xl font-bold">InnerCommand</h1>
-        <p className="text-md mt-1">Control yourself, peaceful mind</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-yellow-100 text-gray-800 flex flex-col items-center p-6">
+      {/* Logo and Heading */}
+      <div className="text-center mt-4">
+        <div className="w-20 h-20 border-4 border-gray-700 rounded-full mx-auto mb-2"></div>
+        <h1 className="text-3xl font-bold">InnerCommand</h1>
+        <p className="text-md">Train your mind. Transform your world.</p>
       </div>
 
-      {/* Main UI Grid */}
-      <div className="grid grid-cols-12 gap-2 flex-grow">
-        {/* Left nav */}
-        <div className="col-span-2 flex flex-col items-center gap-6 pt-6">
-          <div className="text-center">
-            <div className="text-2xl">🏠</div>
-            <div className="text-sm">Home</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl">📊</div>
-            <div className="text-sm">Statistics</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl">⚙️</div>
-            <div className="text-sm">Settings</div>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="col-span-1 border-l border-gray-400"></div>
-
-        {/* Mood Entry */}
-        <div className="col-span-9">
-          <h2 className="text-xl font-bold mb-2">How are you feeling today?</h2>
-
-          {/* Slider */}
+      {/* Mood Slider Section */}
+      <div className="w-full max-w-xl mt-10">
+        <p className="text-center text-lg font-semibold mb-2">How are you feeling today/now?</p>
+        <div className="flex items-center justify-between px-4">
+          <span>😢</span>
           <input
             type="range"
             min="0"
-            max="10"
+            max="100"
             value={mood}
-            onChange={(e) => setMood(Number(e.target.value))}
-            className="w-full mb-2"
+            onChange={(e) => setMood(e.target.value)}
+            className="w-full mx-4 h-3 rounded-lg appearance-none cursor-pointer"
+            style={moodGradient}
           />
+          <span>😊</span>
+        </div>
+      </div>
 
-          {/* Emoji scale */}
-          <div className="flex justify-between text-2xl mb-2">
-            <span>😔</span>
-            <span>😐</span>
-            <span>😊</span>
+      {/* Emotion Tags */}
+      <div className="w-full max-w-4xl grid grid-cols-2 gap-6 mt-10">
+        <div>
+          <h2 className="font-semibold mb-2">Group: Sad</h2>
+          <div className="grid grid-cols-3 gap-2">
+            {['Lonely', 'Tired', 'Worried', 'Anxious', 'Guilty', 'Hopeless'].map((emotion, index) => (
+              <button key={index} className="bg-blue-200 rounded-full px-4 py-2 text-sm hover:bg-blue-300">
+                {emotion}
+              </button>
+            ))}
           </div>
-
-          <div className="text-lg mb-2 font-medium">Mood: {mood}/10</div>
-
-          {/* Note input */}
-          <textarea
-            className="w-full p-2 border rounded"
-            placeholder="Anything you'd like to note?"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-          />
-
-          <div className="mt-2">
-            <button
-              onClick={handleSave}
-              className="bg-blue-500 text-white px-4 py-1 rounded"
-            >
-              Save Entry
-            </button>
+        </div>
+        <div>
+          <h2 className="font-semibold mb-2">Group: Happy</h2>
+          <div className="grid grid-cols-3 gap-2">
+            {['Grateful', 'Peaceful', 'Excited', 'Joyful', 'Loved', 'Hopeful'].map((emotion, index) => (
+              <button key={index} className="bg-yellow-200 rounded-full px-4 py-2 text-sm hover:bg-yellow-300">
+                {emotion}
+              </button>
+            ))}
           </div>
+        </div>
+      </div>
 
-          {/* Logs */}
-          <h3 className="text-xl font-bold mt-6">Recent Logs</h3>
-          {logs.length === 0 ? (
-            <p>No entries yet.</p>
-          ) : (
-            <ul className="mt-2">
-              {logs.map((entry, index) => (
-                <li key={index} className="mb-1">
-                  {entry.timestamp}: Mood {entry.mood}/10 — {entry.note}
-                </li>
-              ))}
-            </ul>
-          )}
+      {/* Note Section */}
+      <div className="w-full max-w-2xl mt-10">
+        <label className="block text-md font-medium mb-1">Note</label>
+        <textarea
+          className="w-full rounded-lg border border-gray-300 p-3 h-20"
+          placeholder="Write a short reflection..."
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
+      </div>
+
+      {/* Entry Section */}
+      <div className="w-full max-w-2xl mt-4">
+        <label className="block text-md font-medium mb-1">Entry</label>
+        <textarea
+          className="w-full rounded-lg border border-gray-400 p-3 h-28"
+          placeholder="Write your thoughts or journal here..."
+          value={entry}
+          onChange={(e) => setEntry(e.target.value)}
+        />
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-4 flex justify-center space-x-8 text-gray-600">
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">🏠</div>
+          <span className="text-xs mt-1">Home</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">📈</div>
+          <span className="text-xs mt-1">Stats</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">❓</div>
+          <span className="text-xs mt-1">Help</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">⚙️</div>
+          <span className="text-xs mt-1">Settings</span>
         </div>
       </div>
     </div>
